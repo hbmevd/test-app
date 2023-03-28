@@ -1,0 +1,274 @@
+.container {
+  margin-top: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  padding: 0 24px;
+}
+
+.h1 {
+  margin-bottom: 0px;
+}
+
+.explain {
+  font-size: 1.125rem;
+  max-width: 1200px;
+}
+
+.divider {
+  width: 50%;
+  border-color: grey;
+  opacity: 0.25;
+}
+
+.smallDivider {
+  width: 25%;
+  border-color: grey;
+  margin-top: 64px;
+  opacity: 0.25;
+}
+
+.claimRewards {
+  font-family: "Ubuntu", sans-serif;
+  color: white;
+  background-color: orange;
+  border: none;
+}
+
+.nftBoxGrid {
+  display: flex;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.nftBox {
+  border-radius: 16px;
+  width: 39%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 10px;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.connectWalletButton {
+  background-color: #ffffff;
+  border: 1px solid rgb(209, 213, 219);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  text-decoration: none #d1d5db solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.connectWalletButton:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+.styledButton {
+  align-items: center;
+  background-color: initial;
+  background-image: linear-gradient(#464d55, #25292e);
+  border-radius: 8px;
+  border-width: 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row;
+  font-family: expo-brand-demi, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 18px;
+  height: 52px;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 32px;
+  text-align: center;
+  text-decoration: none;
+  transform: translate3d(0, 0, 0);
+  transition: all 150ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.styledButton:hover {
+  box-shadow: rgba(0, 1, 0, 0.2) 0 2px 8px;
+  opacity: 0.85;
+}
+
+.styledButton:active {
+  outline: 0;
+}
+
+.styledButton:focus {
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 3px;
+}
+
+@media (max-width: 420px) {
+  .styledButton {
+    height: 48px;
+  }
+}
+
+.connectWalletButton:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.connectWalletButton:focus-visible {
+  box-shadow: none;
+}
+
+.optionSelectBox {
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  width: 48%;
+  min-height: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  cursor: pointer;
+}
+
+.selectBoxTitle {
+  font-size: 1.75rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.selectBoxDescription {
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0px;
+}
+
+/* Between 1200 and 800 */
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
+  .nftBox {
+    width: 39%;
+    margin-top: 16px;
+  }
+}
+
+/* beneath 800
+*/
+@media only screen and (max-width: 800px) {
+  .nftBoxGrid {
+    justify-content: center;
+  }
+  .nftBox {
+    width: 39%;
+    margin-top: 16px;
+  }
+  .optionSelectBox {
+    width: 39%;
+    margin-top: 16px;
+  }
+}
+
+.tokenGrid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1%;
+  width: 1600px;
+  max-width: 95vw;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.tokenItem {
+  width: 35%;
+  height: 120px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  gap: 16px;
+}
+
+.tokenLabel {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Second tokenLabel item */
+
+.tokenValue {
+  font-size: 1.3rem;
+  margin-top: 8px;
+  margin-bottom: 0px;
+  font-weight: 500;
+}
+
+/* On Mobile, make tokenGrid 100% width */
+@media only screen and (max-width: 850px) {
+  .tokenItem {
+    width: 39%;
+    margin-top: 12px;
+  }
+}
+
+/* Screen less than 630, then hide .center */
+@media only screen and (max-width: 630px) {
+  .center {
+    display: none;
+  }
+}
+
+.spacerTop {
+  margin-top: 16px;
+}
+
+.bigSpacerTop {
+  margin-top: 32px;
+}
+
+.spacerBottom {
+  margin-bottom: 20px;
+  width: 10px;
+}
+
+.detailPageHr {
+  margin-top: 0px;
+  margin-bottom: 32px;
+}
+
+.nftMedia {
+  width: 50%;
+  max-height: 300px;
+  border-radius: 20px;
+}

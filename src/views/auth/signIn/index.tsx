@@ -22,7 +22,7 @@
 */
 
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -31,11 +31,14 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Grid,
   Heading,
   Icon,
   Input,
   InputGroup,
   InputRightElement,
+  SimpleGrid,
+  Tag,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -44,13 +47,36 @@ import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 // Assets
 import illustration from "assets/img/auth/auth.png";
+import cyborgbg from "assets/img/auth/cyborgbg.png";
 import { FcGoogle } from "react-icons/fc";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { RiEyeCloseLine } from "react-icons/ri";
+import {
+  MdAddBox,
+  MdAttachMoney,
+  MdBarChart,
+  MdOutlineRemoveRedEye,
+} from "react-icons/md";
+import { RiEyeCloseLine, RiStackFill } from "react-icons/ri";
+import {
+  ConnectWallet,
+  ThirdwebNftMedia,
+  useDisconnect,
+  Web3Button,
+} from "@thirdweb-dev/react";
+import crlogo from "assets/img/nfts/crlogo.png";
+import { useMetamask } from "@thirdweb-dev/react";
+import styles from "styles/Home.module.css";
+import { FaEthereum } from "react-icons/fa";
+import { useAddress } from "@thirdweb-dev/react";
+import MiniStatistics from "components/card/MiniStatistics";
+import NFTCard from "components/card/NFTCard";
+import IconBox from "components/icons/IconBox";
+import { stakingContractAddress } from "consts/contractAddresses";
+import { ethers, BigNumber } from "ethers";
 
 function SignIn() {
   // Chakra color mode
-  const textColor = useColorModeValue("navy.700", "white");
+  const address = useAddress();
+  const textColor = useColorModeValue("black", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
   const textColorBrand = useColorModeValue("brand.500", "white");
@@ -67,169 +93,98 @@ function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
+  const connectWithMetamask = useMetamask();
+  const disconnect = useDisconnect();
+
   return (
-    <DefaultAuth illustrationBackground={illustration} image={illustration}>
+    <DefaultAuth illustrationBackground={cyborgbg} image={cyborgbg}>
       <Flex
         maxW={{ base: "100%", md: "max-content" }}
-        w='100%'
+        w="100%"
         mx={{ base: "auto", lg: "0px" }}
-        me='auto'
-        h='100%'
-        alignItems='start'
-        justifyContent='center'
+        me="auto"
+        h="100%"
+        alignItems="start"
+        justifyContent="center"
         mb={{ base: "30px", md: "60px" }}
         px={{ base: "25px", md: "0px" }}
         mt={{ base: "40px", md: "14vh" }}
-        flexDirection='column'>
-        <Box me='auto'>
-          <Heading color={textColor} fontSize='36px' mb='10px'>
-            Sign In
-          </Heading>
-          <Text
-            mb='36px'
-            ms='4px'
-            color={textColorSecondary}
-            fontWeight='400'
-            fontSize='md'>
-            Enter your email and password to sign in!
-          </Text>
-        </Box>
+        flexDirection="column"
+      >
+        <img src={crlogo} alt={""} width={150} height={150}></img>
+        <Box me="auto"></Box>
         <Flex
-          zIndex='2'
-          direction='column'
+          zIndex="2"
+          direction="column"
           w={{ base: "100%", md: "420px" }}
-          maxW='100%'
-          background='transparent'
-          borderRadius='15px'
+          maxW="100%"
+          background="transparent"
+          borderRadius="15px"
           mx={{ base: "auto", lg: "unset" }}
-          me='auto'
-          mb={{ base: "20px", md: "auto" }}>
-          <Button
-            fontSize='sm'
-            me='0px'
-            mb='26px'
-            py='15px'
-            h='50px'
-            borderRadius='16px'
-            bg={googleBg}
-            color={googleText}
-            fontWeight='500'
-            _hover={googleHover}
-            _active={googleActive}
-            _focus={googleActive}>
-            <Icon as={FcGoogle} w='20px' h='20px' me='10px' />
-            Sign in with Google
-          </Button>
-          <Flex align='center' mb='25px'>
-            <HSeparator />
-            <Text color='gray.400' mx='14px'>
-              or
-            </Text>
-            <HSeparator />
-          </Flex>
-          <FormControl>
-            <FormLabel
-              display='flex'
-              ms='4px'
-              fontSize='sm'
-              fontWeight='500'
-              color={textColor}
-              mb='8px'>
-              Email<Text color={brandStars}>*</Text>
-            </FormLabel>
-            <Input
-              isRequired={true}
-              variant='auth'
-              fontSize='sm'
-              ms={{ base: "0px", md: "0px" }}
-              type='email'
-              placeholder='mail@simmmple.com'
-              mb='24px'
-              fontWeight='500'
-              size='lg'
-            />
-            <FormLabel
-              ms='4px'
-              fontSize='sm'
-              fontWeight='500'
-              color={textColor}
-              display='flex'>
-              Password<Text color={brandStars}>*</Text>
-            </FormLabel>
-            <InputGroup size='md'>
-              <Input
-                isRequired={true}
-                fontSize='sm'
-                placeholder='Min. 8 characters'
-                mb='24px'
-                size='lg'
-                type={show ? "text" : "password"}
-                variant='auth'
-              />
-              <InputRightElement display='flex' alignItems='center' mt='4px'>
-                <Icon
+          me="auto"
+          mb={{ base: "20px", md: "auto" }}
+        >
+          <Flex align="center" mb="25px"></Flex>
+          <div>
+            {!address ? (
+              <>
+                <Heading color={textColor} fontSize="36px" mb="10px">
+                  Connect to Web3
+                </Heading>
+                <Text
+                  mb="36px"
+                  ms="4px"
                   color={textColorSecondary}
-                  _hover={{ cursor: "pointer" }}
-                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
-                />
-              </InputRightElement>
-            </InputGroup>
-            <Flex justifyContent='space-between' align='center' mb='24px'>
-              <FormControl display='flex' alignItems='center'>
-                <Checkbox
-                  id='remember-login'
-                  colorScheme='brandScheme'
-                  me='10px'
-                />
-                <FormLabel
-                  htmlFor='remember-login'
-                  mb='0'
-                  fontWeight='normal'
-                  color={textColor}
-                  fontSize='sm'>
-                  Keep me logged in
-                </FormLabel>
-              </FormControl>
-              <NavLink to='/auth/forgot-password'>
-                <Text
-                  color={textColorBrand}
-                  fontSize='sm'
-                  w='124px'
-                  fontWeight='500'>
-                  Forgot password?
+                  fontWeight="400"
+                  fontSize="md"
+                >
+                  Connect with a Web3 provider to continue
                 </Text>
-              </NavLink>
-            </Flex>
-            <Button
-              fontSize='sm'
-              variant='brand'
-              fontWeight='500'
-              w='100%'
-              h='50'
-              mb='24px'>
-              Sign In
-            </Button>
-          </FormControl>
-          <Flex
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='start'
-            maxW='100%'
-            mt='0px'>
-            <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-              Not registered yet?
-              <NavLink to='/auth/sign-up'>
+                <button
+                  className={styles.styledButton}
+                  onClick={connectWithMetamask}
+                >
+                  <Icon
+                    width={15}
+                    height={15}
+                    justifyContent="center"
+                    mr="5"
+                    as={FaEthereum}
+                  ></Icon>
+                  Connect Metamask
+                </button>
+              </>
+            ) : (
+              <>
+                <button className={styles.styledButton} onClick={disconnect}>
+                  <Icon
+                    width={15}
+                    height={15}
+                    justifyContent="center"
+                    mr="5"
+                    as={FaEthereum}
+                  ></Icon>
+                  Disconnect wallet
+                </button>
                 <Text
-                  color={textColorBrand}
-                  as='span'
-                  ms='5px'
-                  fontWeight='500'>
-                  Create an Account
+                  mb="36px"
+                  ms="4px"
+                  color={textColorSecondary}
+                  fontWeight="400"
+                  fontSize="md"
+                  mt="3"
+                >
+                  {address}
                 </Text>
-              </NavLink>
-            </Text>
-          </Flex>
+                <div>
+                  <button className={styles.styledButton}>
+                    <Link to={"/default"}>Continue</Link>
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </Flex>
       </Flex>
     </DefaultAuth>

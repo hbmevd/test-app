@@ -20,206 +20,255 @@
 
 */
 
-import React from 'react';
-
 // Chakra imports
-import { Box, Button, Flex, Grid, Link, Text, useColorModeValue, SimpleGrid } from '@chakra-ui/react';
-
-// Custom components
-import Banner from 'views/admin/marketplace/components/Banner';
-import TableTopCreators from 'views/admin/marketplace/components/TableTopCreators';
-import HistoryItem from 'views/admin/marketplace/components/HistoryItem';
-import NFT from 'components/card/NFT';
-import Card from 'components/card/Card';
-
+import {
+  Avatar,
+  Box,
+  Flex,
+  FormLabel,
+  Grid,
+  Icon,
+  Select,
+  SimpleGrid,
+  Stack,
+  Tag,
+  useColorModeValue,
+} from "@chakra-ui/react";
 // Assets
-import Nft1 from 'assets/img/nfts/Nft1.png';
-import Nft2 from 'assets/img/nfts/Nft2.png';
-import Nft3 from 'assets/img/nfts/Nft3.png';
-import Nft4 from 'assets/img/nfts/Nft4.png';
-import Nft5 from 'assets/img/nfts/Nft5.png';
-import Nft6 from 'assets/img/nfts/Nft6.png';
-import Avatar1 from 'assets/img/avatars/avatar1.png';
-import Avatar2 from 'assets/img/avatars/avatar2.png';
-import Avatar3 from 'assets/img/avatars/avatar3.png';
-import Avatar4 from 'assets/img/avatars/avatar4.png';
-import tableDataTopCreators from 'views/admin/marketplace/variables/tableDataTopCreators'; 
+import Usa from "assets/img/dashboards/usa.png";
+// Custom components
+import MiniCalendar from "components/calendar/MiniCalendar";
+import MiniStatistics from "components/card/MiniStatistics";
+import IconBox from "components/icons/IconBox";
+import {
+  MdAddBox,
+  MdAddTask,
+  MdAttachMoney,
+  MdBarChart,
+  MdFileCopy,
+  MdSafetyCheck,
+} from "react-icons/md";
+import CheckTable from "views/admin/rtl/components/CheckTable";
+import ComplexTable from "views/admin/default/components/ComplexTable";
+import DailyTraffic from "views/admin/default/components/DailyTraffic";
+import PieCard from "views/admin/default/components/PieCard";
+import Tasks from "views/admin/default/components/Tasks";
+import TotalSpent from "views/admin/default/components/TotalSpent";
+import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
+import tableDataCheck from "views/admin/default/variables/tableDataCheck";
+import tableDataComplex from "views/admin/default/variables/tableDataComplex";
+import Stake from "../stake";
+import {
+  useAddress,
+  useContract,
+  useOwnedNFTs,
+  useTokenBalance,
+  useContractRead,
+  ConnectWallet,
+  Web3Button,
+  ThirdwebNftMedia,
+} from "@thirdweb-dev/react";
+import {
+  nftDropContractAddress,
+  tokenContractAddress,
+  stakingContractAddress,
+} from "consts/contractAddresses";
+import { BigNumber, ethers } from "ethers";
+import { useState, useEffect } from "react";
+import styles from "styles/Home.module.css";
+import NFTCard from "components/card/NFTCard";
+import Notifications from "../profile/components/Notifications";
+import { Headers } from "@tanstack/react-table";
+import { MastercardIcon } from "components/icons/Icons";
+import { FaEthereum } from "react-icons/fa";
+import { RiStackFill } from "react-icons/ri";
+import { UserWallet } from "@thirdweb-dev/sdk";
+import General from "../profile/components/General";
+import { VSeparator, HSeparator } from "components/separator/Separator";
 
-export default function Marketplace() {
-	// Chakra Color Mode
-	const textColor = useColorModeValue('secondaryGray.900', 'white');
-	const textColorBrand = useColorModeValue('brand.500', 'white');
-	return (
-		<Box pt={{ base: '180px', md: '80px', xl: '80px' }}>
-			{/* Main Fields */}
-			<Grid
-				mb='20px'
-				gridTemplateColumns={{ xl: 'repeat(3, 1fr)', '2xl': '1fr 0.46fr' }}
-				gap={{ base: '20px', xl: '20px' }}
-				display={{ base: 'block', xl: 'grid' }}>
-				<Flex flexDirection='column' gridArea={{ xl: '1 / 1 / 2 / 3', '2xl': '1 / 1 / 2 / 2' }}>
-					<Banner />
-					<Flex direction='column'>
-						<Flex
-							mt='45px'
-							mb='20px'
-							justifyContent='space-between'
-							direction={{ base: 'column', md: 'row' }}
-							align={{ base: 'start', md: 'center' }}>
-							<Text color={textColor} fontSize='2xl' ms='24px' fontWeight='700'>
-								Trending NFTs
-							</Text>
-							<Flex
-								align='center'
-								me='20px'
-								ms={{ base: '24px', md: '0px' }}
-								mt={{ base: '20px', md: '0px' }}>
-								<Link
-									color={textColorBrand}
-									fontWeight='500'
-									me={{ base: '34px', md: '44px' }}
-									href='#art'>
-									Art
-								</Link>
-								<Link
-									color={textColorBrand}
-									fontWeight='500'
-									me={{ base: '34px', md: '44px' }}
-									href='#music'>
-									Music
-								</Link>
-								<Link
-									color={textColorBrand}
-									fontWeight='500'
-									me={{ base: '34px', md: '44px' }}
-									href='#collectibles'>
-									Collectibles
-								</Link>
-								<Link color={textColorBrand} fontWeight='500' href='#sports'>
-									Sports
-								</Link>
-							</Flex>
-						</Flex>
-						<SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
-							<NFT
-								name='Abstract Colors'
-								author='By Esthera Jackson'
-								bidders={[ Avatar1, Avatar2, Avatar3, Avatar4, Avatar1, Avatar1, Avatar1, Avatar1 ]}
-								image={Nft1}
-								currentbid='0.91 ETH'
-								download='#'
-							/>
-							<NFT
-								name='ETH AI Brain'
-								author='By Nick Wilson'
-								bidders={[ Avatar1, Avatar2, Avatar3, Avatar4, Avatar1, Avatar1, Avatar1, Avatar1 ]}
-								image={Nft2}
-								currentbid='0.91 ETH'
-								download='#'
-							/>
-							<NFT
-								name='Mesh Gradients '
-								author='By Will Smith'
-								bidders={[ Avatar1, Avatar2, Avatar3, Avatar4, Avatar1, Avatar1, Avatar1, Avatar1 ]}
-								image={Nft3}
-								currentbid='0.91 ETH'
-								download='#'
-							/>
-						</SimpleGrid>
-						<Text mt='45px' mb='36px' color={textColor} fontSize='2xl' ms='24px' fontWeight='700'>
-							Recently Added
-						</Text>
-						<SimpleGrid columns={{ base: 1, md: 3 }} gap='20px' mb={{ base: '20px', xl: '0px' }}>
-							<NFT
-								name='Swipe Circles'
-								author='By Peter Will'
-								bidders={[ Avatar1, Avatar2, Avatar3, Avatar4, Avatar1, Avatar1, Avatar1, Avatar1 ]}
-								image={Nft4}
-								currentbid='0.91 ETH'
-								download='#'
-							/>
-							<NFT
-								name='Colorful Heaven'
-								author='By Mark Benjamin'
-								bidders={[ Avatar1, Avatar2, Avatar3, Avatar4, Avatar1, Avatar1, Avatar1, Avatar1 ]}
-								image={Nft5}
-								currentbid='0.91 ETH'
-								download='#'
-							/>
-							<NFT
-								name='3D Cubes Art'
-								author='By Manny Gates'
-								bidders={[ Avatar1, Avatar2, Avatar3, Avatar4, Avatar1, Avatar1, Avatar1, Avatar1 ]}
-								image={Nft6}
-								currentbid='0.91 ETH'
-								download='#'
-							/>
-						</SimpleGrid>
-					</Flex>
-				</Flex>
-				<Flex flexDirection='column' gridArea={{ xl: '1 / 3 / 2 / 4', '2xl': '1 / 2 / 2 / 3' }}>
-					<Card px='0px' mb='20px'>
-						<TableTopCreators tableData={tableDataTopCreators}  />
-					</Card>
-					<Card p='0px'>
-						<Flex
-							align={{ sm: 'flex-start', lg: 'center' }}
-							justify='space-between'
-							w='100%'
-							px='22px'
-							py='18px'>
-							<Text color={textColor} fontSize='xl' fontWeight='600'>
-								History
-							</Text>
-							<Button variant='action'>See all</Button>
-						</Flex>
+export default function UserReports() {
+  // Chakra Color Mode
+  const brandColor = useColorModeValue("brand.500", "white");
+  const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+  const address = useAddress();
+  const { contract: nftDropContract } = useContract(
+    nftDropContractAddress,
+    "nft-drop"
+  );
+  const { contract: tokenContract } = useContract(
+    tokenContractAddress,
+    "token"
+  );
+  const { contract, isLoading } = useContract(stakingContractAddress);
+  const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
+  const { data: tokenBalance } = useTokenBalance(tokenContract, address);
+  const [claimableRewards, setClaimableRewards] = useState<BigNumber>();
+  const { data: stakedTokens } = useContractRead(
+    contract,
+    "getStakeInfo",
+    address
+  );
 
-						<HistoryItem
-							name='Colorful Heaven'
-							author='By Mark Benjamin'
-							date='30s ago'
-							image={Nft5}
-							price='0.91 ETH'
-						/>
-						<HistoryItem
-							name='Abstract Colors'
-							author='By Esthera Jackson'
-							date='58s ago'
-							image={Nft1}
-							price='0.91 ETH'
-						/>
-						<HistoryItem
-							name='ETH AI Brain'
-							author='By Nick Wilson'
-							date='1m ago'
-							image={Nft2}
-							price='0.91 ETH'
-						/>
-						<HistoryItem
-							name='Swipe Circles'
-							author='By Peter Will'
-							date='1m ago'
-							image={Nft4}
-							price='0.91 ETH'
-						/>
-						<HistoryItem
-							name='Mesh Gradients '
-							author='By Will Smith'
-							date='2m ago'
-							image={Nft3}
-							price='0.91 ETH'
-						/>
-						<HistoryItem
-							name='3D Cubes Art'
-							author='By Manny Gates'
-							date='3m ago'
-							image={Nft6}
-							price='0.91 ETH'
-						/>
-					</Card>
-				</Flex>
-			</Grid>
-			{/* Delete Product */}
-		</Box>
-	);
+  useEffect(() => {
+    if (!contract || !address) return;
+
+    async function loadClaimableRewards() {
+      const stakeInfo = await contract?.call("getStakeInfo", address);
+      setClaimableRewards(stakeInfo[1]);
+    }
+
+    loadClaimableRewards();
+  }, [address, contract]);
+
+  async function stakeNft(id: string) {
+    if (!address) return;
+
+    const isApproved = await nftDropContract?.isApproved(
+      address,
+      stakingContractAddress
+    );
+    if (!isApproved) {
+      await nftDropContract?.setApprovalForAll(stakingContractAddress, true);
+    }
+    await contract?.call("stake", [id]);
+  }
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+
+  return (
+    <>
+      <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+        {!address ? (
+          <Tag position="fixed" padding="5" fontWeight="bold" fontSize="20">
+            <Icon pr="3" w="32px" h="32px" as={FaEthereum} color={brandColor} />
+            Connect Wallet to continue
+          </Tag>
+        ) : (
+          <SimpleGrid
+            columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
+            gap="20px"
+            mb="20px"
+          >
+            <MiniStatistics
+              startContent={
+                <IconBox
+                  w="56px"
+                  h="56px"
+                  bg={boxBg}
+                  icon={
+                    <Icon
+                      w="32px"
+                      h="32px"
+                      as={MdBarChart}
+                      color={brandColor}
+                    />
+                  }
+                />
+              }
+              name="CRXX Balance"
+              value={Number(tokenBalance?.displayValue).toFixed(1)}
+            />
+            <MiniStatistics
+              startContent={
+                <IconBox
+                  w="56px"
+                  h="56px"
+                  bg={boxBg}
+                  icon={
+                    <Icon
+                      w="32px"
+                      h="32px"
+                      as={MdAttachMoney}
+                      color={brandColor}
+                    />
+                  }
+                />
+              }
+              name="CRXX to Claim"
+              value={
+                !claimableRewards
+                  ? "Loading..."
+                  : parseFloat(ethers.utils.formatUnits(claimableRewards, 18))
+                      .toFixed(1)
+                      .toString()
+              }
+            />
+            <MiniStatistics
+              growth="ERC721"
+              name="NFT Total Supply"
+              value="10,000"
+            />
+          </SimpleGrid>
+        )}
+      </Box>
+      <Box pt={{ base: "180px", md: "80px", xl: "0px" }}>
+        <Grid
+          mb="20px"
+          gridTemplateColumns={{ xl: "repeat(2, 1fr)", "2xl": "1fr 1fr" }}
+          gap={{ base: "20px", xl: "20px" }}
+          display={{ base: "block", xl: "grid" }}
+        >
+          <div>
+            <Tag
+              shadow="md"
+              m="1"
+              fontWeight="bold"
+              fontFamily="sans-serif"
+              padding="3"
+            >
+              {" "}
+              <Icon
+                pr="3"
+                w="32px"
+                h="32px"
+                as={RiStackFill}
+                color={"orange"}
+              />
+              Your Staked NFTs
+            </Tag>
+            <div>
+              {stakedTokens &&
+                stakedTokens[0]?.map((stakedToken: BigNumber) => (
+                  <NFTCard
+                    tokenId={stakedToken.toNumber()}
+                    key={stakedToken.toString()}
+                  />
+                ))}
+            </div>
+          </div>
+          <div>
+            <Tag
+              shadow="md"
+              m="1"
+              padding="3"
+              fontWeight="bold"
+              fontFamily="sans-serif"
+            >
+              <Icon pr="3" w="32px" h="32px" as={MdAddBox} color={"orange"} />
+              Unstaked NFTs
+            </Tag>
+            <div>
+              {ownedNfts?.map((nft) => (
+                <div className={styles.nftBox} key={nft.metadata.id.toString()}>
+                  <ThirdwebNftMedia
+                    metadata={nft.metadata}
+                    className={styles.nftMedia}
+                  />{" "}
+                  <Web3Button
+                    contractAddress={stakingContractAddress}
+                    action={() => stakeNft(nft.metadata.id)}
+                    colorMode="light"
+                  >
+                    Stake
+                  </Web3Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Grid>
+      </Box>
+    </>
+  );
 }
